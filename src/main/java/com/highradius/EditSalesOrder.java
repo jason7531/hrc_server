@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class EditSalesOrder
  */
-@WebServlet("/EditSalesOrder")
+@WebServlet("/EditInvoice")
 public class EditSalesOrder extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -57,17 +57,17 @@ public class EditSalesOrder extends HttpServlet {
 				System.out.println(final_values[i]);
 			}
 			
-			String salesOrderNumber = final_values[0];
-			String salesOrderAmount = final_values[1];
-			String notes = final_values[2];
+			String invoiceCurrency = final_values[0];
+			String customerPaymentTerms = final_values[1];
+			String slNo = final_values[2];
 			
 			Connection conn = GetConnection.connectToDB();
-			String sql_statement = "UPDATE invoice_details SET total_open_amount = ?, notes = ? WHERE doc_id = ?";
+			String sql_statement = "UPDATE winter_internship SET invoice_currency=?, cust_payment_terms=? WHERE sl_no=?";
 			
 			PreparedStatement st = conn.prepareStatement(sql_statement);
-			st.setString(3, salesOrderNumber);
-			st.setString(1, salesOrderAmount);
-			st.setString(2, notes.isEmpty() ? null : notes);
+			st.setString(3, slNo);
+			st.setString(1, invoiceCurrency);
+			st.setString(2, customerPaymentTerms);
 			
 			System.out.println(st);
 			
