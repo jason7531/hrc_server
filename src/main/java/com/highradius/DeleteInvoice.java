@@ -4,12 +4,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONObject;
 
 /**
  * Servlet implementation class EditSalesOrder
@@ -32,6 +35,7 @@ public class DeleteInvoice extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+		doPost(request, response);
 	}
 
 	/**
@@ -39,24 +43,24 @@ public class DeleteInvoice extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String invoice = null;
 		
 		try {
-			BufferedReader reader = request.getReader();
-			invoice = reader.readLine();
-			invoice =  invoice.substring(1, invoice.length() - 1);
+//			BufferedReader reader = request.getReader();
+//			invoice = reader.readLine();
+//			invoice =  invoice.substring(1, invoice.length() - 1);
 			
-			System.out.println(invoice);
-			String final_values[] = invoice.split(":", -1);
+			
+//			String final_values[] = invoice.split(":", -1);
+//			JSONObject json = new JSONObject(invoice);
+//			System.out.println(json.getString("slNo"));
+			String slNo = request.getParameter("slNo");
+			System.out.println(slNo);
 			Connection conn = GetConnection.connectToDB();
 			String sql_statement = "DELETE FROM winter_internship WHERE sl_no = ?";
-			
-			for(int i = 2; i < final_values.length; ++i) {
-				PreparedStatement st = conn.prepareStatement(sql_statement);
-				st.setString(1, final_values[i].substring(1, 2));
-				System.out.println(st);
-				st.executeUpdate();
-			}
+			PreparedStatement ps = conn.prepareStatement(sql_statement);
+			ps.setString(1, slNo);
+			System.out.println(ps);
+			ps.executeUpdate();
 			conn.close();
 		}
 		catch(Exception e) {
