@@ -47,12 +47,14 @@ public class SearchInvoice extends HttpServlet {
 		try {
 			Connection conn = GetConnection.connectToDB();
 			
-			String searchKeyword = request.getParameter("docId");
-			
+			String docId = request.getParameter("docId");
+			String businessYear = request.getParameter("businessYear");
+			String customerNumber = request.getParameter("customerNumber");
+			String invoiceId = request.getParameter("invoiceId");
 
 			
 			Statement st = conn.createStatement();
-			String sql_statement = "SELECT * FROM winter_internship WHERE doc_id LIKE '" + searchKeyword + "%'";
+			String sql_statement = "SELECT * FROM winter_internship WHERE doc_id LIKE '" + docId + "%' and buisness_year LIKE '%" + businessYear + "%' and cust_number LIKE '%" + customerNumber + "%' and invoice_id LIKE '%" + invoiceId + "%' ";
 			System.out.println(sql_statement);
 			ResultSet rs = st.executeQuery(sql_statement);
 			
